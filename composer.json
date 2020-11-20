@@ -1,0 +1,28 @@
+{
+    "name": "suhrr/laravel-searchable",
+    "description": "Easily search for eloquent model by Laravel",
+    "keywords": ["laravel", "search"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "suhrr",
+            "email": "suhrr.code@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Suhrr\\LaravelSearchable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Suhrr\\LaravelSearchable\\ServiceProvider"
+            ]
+        }
+    },
+      "require": {
+        "php": "^7.2",
+        "laravel/framework": "6.*"
+    }
+}
