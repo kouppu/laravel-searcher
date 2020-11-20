@@ -22,6 +22,19 @@ class LaravelSearcher
     }
 
     /**
+     * reset
+     *
+     * @param Eloquent $model
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
+     */
+    public function reset(Eloquent $model)
+    {
+        $child_search = $this->createChildSearch($model);
+        $search = new $child_search();
+        return $search->reset($model);
+    }
+
+    /**
      * 継承先の検索クラスのインスタンス文字列を生成
      *
      * @param Eloquent $model

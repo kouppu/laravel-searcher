@@ -49,6 +49,7 @@ abstract class AbstractSearch
     /**
      * 検索結果を取得
      *
+     * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
      */
     public function search(Eloquent $model)
@@ -68,10 +69,12 @@ abstract class AbstractSearch
     /**
      * 検索リセット結果を取得
      *
+     * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
      */
-    protected function fetchResetResult()
+    public function reset(Eloquent $model)
     {
+        $this->setBuilder($model);
         request()->flush();
 
         if ($this->isPaginate) {
@@ -90,18 +93,21 @@ abstract class AbstractSearch
     private function applyDecoratorsFromRequest(Request $request, Builder $builder): Builder
     {
         foreach ($request->all() as $name => $value) {
-            if (is_array($this->params) && !array_key_exists($name, $this->params)) {
+            $index = array_search($name, array_column($this->params, 'name'));
+            if ($index === false) {
                 continue;
             }
 
-            $filter_name = $this->convertTypeToName($this->params[$name]['type']);
-            if (!$filter_name) {
+            $param = $this->params[$index];
+            var_dump($value);
+            $filter_name = $this->convertTypeToName($param['type']);
+            if (is_null($filter_name)) {
                 continue;
             }
 
             $decorator = $this->createFilterDecorator($filter_name);
             if ($this->isValidDecorator($decorator, $value)) {
-                $builder = $decorator::apply($builder, $name, $value);
+                $builder = $decorator::apply($builder, $param['column'], $value);
             }
         }
         return $builder;
