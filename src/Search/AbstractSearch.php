@@ -99,15 +99,25 @@ abstract class AbstractSearch
             }
 
             $param = $this->params[$index];
-            var_dump($value);
             $filter_name = $this->convertTypeToName($param['type']);
             if (is_null($filter_name)) {
                 continue;
             }
 
+            if ($filter_name === 'orderBy') {
+                $arr = $this->parseSort($value);
+                if (is_null($arr)) {
+                    continue;
+                }
+                $column = $arr['column'];
+                $value = $arr['value'];
+            } else {
+                $column = $param['column'];
+            }
+
             $decorator = $this->createFilterDecorator($filter_name);
             if ($this->isValidDecorator($decorator, $value)) {
-                $builder = $decorator::apply($builder, $param['column'], $value);
+                $builder = $decorator::apply($builder, $column, $value);
             }
         }
         return $builder;
@@ -122,6 +132,31 @@ abstract class AbstractSearch
     private function createFilterDecorator(string $name): string
     {
         return  '\\' . __NAMESPACE__ . '\\Filters\\' . Str::studly($name);
+    }
+
+    /**
+     * ソート情報をフィルターに必要な形にパースする
+     *
+     * @param string $value
+     * @return array|null
+     */
+    private function parseSort(string $value): ?array
+    {
+        $arr = explode('_asc', $value);
+        if (isset($arr[1])) {
+            return [
+                'value' => 'asc',
+                'column' => $arr[0]
+            ];
+        }
+        $arr = explode('_desc', $value);
+        if (isset($arr[1])) {
+            return [
+                'value' => 'desc',
+                'column' => $arr[0]
+            ];
+        }
+        return null;
     }
 
     /**
@@ -177,6 +212,9 @@ abstract class AbstractSearch
                 break;
             case 'like':
                 return 'like';
+                break;
+            case 'orderBy':
+                return 'orderBy';
                 break;
             default:
                 return null;
