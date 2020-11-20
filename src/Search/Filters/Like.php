@@ -1,8 +1,8 @@
 <?php
 
-namespace Suhrr\LaravelSearchable\Search\Filters;
+namespace Suhrr\LaravelSearcher\Search\Filters;
 
-use Suhrr\LaravelSearchable\Search\FilterInterface;
+use Suhrr\LaravelSearcher\Search\FilterInterface;
 use Illuminate\Database\Eloquent\Builder;
 
 class Like implements FilterInterface

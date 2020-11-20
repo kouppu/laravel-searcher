@@ -1,6 +1,6 @@
 <?php
 
-namespace Suhrr\LaravelSearchable\Search;
+namespace Suhrr\LaravelSearcher\Search;
 
 use Illuminate\Database\Eloquent\Builder;
 

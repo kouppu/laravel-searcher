@@ -1,5 +1,5 @@
 {
-    "name": "suhrr/laravel-searchable",
+    "name": "suhrr/laravel-searcher",
     "description": "Easily search for eloquent model by Laravel",
     "keywords": ["laravel", "search"],
     "license": "MIT",
@@ -11,13 +11,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Suhrr\\LaravelSearchable\\": "src/"
+            "Suhrr\\LaravelSearcher\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Suhrr\\LaravelSearchable\\ServiceProvider"
+                "Suhrr\\LaravelSearcher\\ServiceProvider"
             ]
         }
     },

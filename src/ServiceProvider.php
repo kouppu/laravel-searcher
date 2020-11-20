@@ -1,8 +1,8 @@
 <?php
 
-namespace Suhrr\LaravelSearchable;
+namespace Suhrr\LaravelSearcher;
 
-use Suhrr\LaravelSearchable\LaravelSearchable;
+use Suhrr\LaravelSearcher\LaravelSearcher;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -23,9 +23,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->app->singleton(
-            'laravelSearchable',
+            'laravelSearcher',
             function () {
-                return new LaravelSearchable();
+                return new LaravelSearcher();
             }
         );
     }
@@ -33,7 +33,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function provides()
     {
         return [
-            'laravelSearchable',
+            'laravelSearcher',
         ];
     }
 }

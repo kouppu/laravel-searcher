@@ -1,5 +1,5 @@
 <?php
-namespace Suhrr\LaravelSearchable;
+namespace Suhrr\LaravelSearcher;
 
 /**
  * @method \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection search(Eloquent $model)
@@ -12,6 +12,6 @@ class Facade extends \Illuminate\Support\Facades\Facade
      */
     protected static function getFacadeAccessor()
     {
-        return LaravelSearchable::class;
+        return LaravelSearcher::class;
     }
 }

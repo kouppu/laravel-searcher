@@ -1,9 +1,9 @@
 <?php
-namespace Suhrr\LaravelSearchable;
+namespace Suhrr\LaravelSearcher;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class LaravelSearchable
+class LaravelSearcher
 {
     /** @var string */
     private $root = '\\App\\Search';
