@@ -8,15 +8,6 @@ use Suhrr\LaravelSearcher\Console\MakeCommand;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-    }
-
-    /**
      * Register services.
      *
      * @return void
