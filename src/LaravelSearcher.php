@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class LaravelSearcher
 {
     /** @var string */
-    private $root = '\\App\\Search';
+    private $root_namespace = '';
+
+    public function __construct()
+    {
+        $this->root_namespace = \App::getNamespace() . 'Searches';
+    }
+
+    public function getRootNamespace(): string
+    {
+        return $this->root_namespace;
+    }
 
     /**
      * search
@@ -16,21 +26,32 @@ class LaravelSearcher
      */
     public function search(Eloquent $model)
     {
-        $child_search = $this->createChildSearch($model);
-        $search = new $child_search();
+        $search = $this->createChildSearch($model);
         return $search->search($model);
+    }
+
+    /**
+     * reset
+     *
+     * @param Eloquent $model
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
+     */
+    public function reset(Eloquent $model)
+    {
+        $search = $this->createChildSearch($model);
+        return $search->reset($model);
     }
 
     /**
      * 継承先の検索クラスのインスタンス文字列を生成
      *
      * @param Eloquent $model
-     * @return string
+     * @return object
      */
-    private function createChildSearch(Eloquent $model): string
+    private function createChildSearch(Eloquent $model): object
     {
-        $model_names = explode('\\', get_class($model));
-        $model_name = end($model_names);
-        return "{$this->root}\\{$model_name}\\{$model_name}Search";
+        $model_name = class_basename($model);
+        $namespace = "{$this->root_namespace}\\{$model_name}\\{$model_name}Search";
+        return new $namespace();
     }
 }

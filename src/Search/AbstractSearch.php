@@ -5,7 +5,8 @@ namespace Suhrr\LaravelSearcher\Search;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
+use Suhrr\LaravelSearcher\Search\Decorators\FilterDecorator;
+use Suhrr\LaravelSearcher\Search\Decorators\ExtentionFilterDecorator;
 
 abstract class AbstractSearch
 {
@@ -13,6 +14,16 @@ abstract class AbstractSearch
      * @var Builder
      */
     protected $builder;
+
+    /**
+     * @var FilterDecorator
+     */
+    private $filterDecorator;
+
+    /**
+     * @var ExtentionFilterDecorator
+     */
+    private $extFilterDecorator;
 
     /**
      * setting params
@@ -35,6 +46,12 @@ abstract class AbstractSearch
      */
     protected $perPage = 10;
 
+    public function __construct()
+    {
+        $this->filterDecorator = new FilterDecorator();
+        $this->extFilterDecorator = new ExtentionFilterDecorator();
+    }
+
     /**
      * set builder
      *
@@ -49,6 +66,7 @@ abstract class AbstractSearch
     /**
      * 検索結果を取得
      *
+     * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
      */
     public function search(Eloquent $model)
@@ -68,10 +86,12 @@ abstract class AbstractSearch
     /**
      * 検索リセット結果を取得
      *
+     * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
      */
-    protected function fetchResetResult()
+    public function reset(Eloquent $model)
     {
+        $this->setBuilder($model);
         request()->flush();
 
         if ($this->isPaginate) {
@@ -87,68 +107,37 @@ abstract class AbstractSearch
      * @param Builder $builder
      * @return Builder
      */
-    private function applyDecoratorsFromRequest(Request $request, Builder $builder): Builder
+    private function applyDecoratorsFromRequest(Request $request, Builder $builder)
     {
         foreach ($request->all() as $name => $value) {
-            if (is_array($this->params) && !array_key_exists($name, $this->params)) {
+            $index = array_search($name, array_column($this->params, 'name'));
+            if ($index === false) {
                 continue;
             }
 
-            $filter_name = $this->convertTypeToName($this->params[$name]['type']);
-            if (!$filter_name) {
-                continue;
+            $param = $this->params[$index];
+            $filter_name = $this->convertTypeToName($param['type']);
+
+            if ($this->filterDecorator->filiterExists($filter_name)) {
+                $builder = $this->filterDecorator->decorte($builder, $param, $value, $filter_name);
             }
 
-            $decorator = $this->createFilterDecorator($filter_name);
-            if ($this->isValidDecorator($decorator, $value)) {
-                $builder = $decorator::apply($builder, $name, $value);
+            // Set extention filters
+            $this->extFilterDecorator->setFilterNamespace($builder);
+            if ($this->extFilterDecorator->filiterExists($filter_name)) {
+                $builder = $this->extFilterDecorator->decorte($builder, $param, $value, $filter_name);
             }
         }
         return $builder;
     }
 
     /**
-     * create filter decorator
-     *
-     * @param string $name
-     * @return string
-     */
-    private function createFilterDecorator(string $name): string
-    {
-        return  '\\' . __NAMESPACE__ . '\\Filters\\' . Str::studly($name);
-    }
-
-    /**
-     * リクエストされた値をDecorator用にバリデーションする
-     *
-     * @param $decorator
-     * @param $value
-     * @return boolean
-     */
-    private function isValidDecorator($decorator, $value): bool
-    {
-        if (is_null($value)) {
-            return false;
-        }
-
-        if (empty($value)) {
-            return false;
-        }
-
-        if (!class_exists($decorator)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * convaert type to filter name
-     *
-     * @param string $type
-     * @return string|null
-     */
-    private function convertTypeToName(string $type): ?string
+    * convaert type to filter name
+    *
+    * @param string $type
+    * @return string|null
+    */
+    protected function convertTypeToName(string $type): ?string
     {
         switch ($type) {
             case '=':
@@ -172,21 +161,11 @@ abstract class AbstractSearch
             case 'like':
                 return 'like';
                 break;
+            case 'orderBy':
+                return 'orderBy';
+                break;
             default:
-                return null;
+                return $type;
         }
-    }
-
-    /**
-     * __callを使用し、
-     * Builderにビルダーメソッドをセットする。
-     *
-     * @param string $method
-     * @param array $arguments
-     * @return void
-     */
-    public function __call(string $method, array $arguments): void
-    {
-        $this->builder->$method(...$arguments);
     }
 }
