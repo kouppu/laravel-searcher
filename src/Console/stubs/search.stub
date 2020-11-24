@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace;
+
+use Suhrr\LaravelSearcher\Search\AbstractSearch;
+
+class DummyClass extends AbstractSearch
+{
+    public function __construct()
+    {
+        $this->params = [];
+    }
+}

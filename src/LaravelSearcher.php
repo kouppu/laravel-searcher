@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class LaravelSearcher
 {
     /** @var string */
-    private $root = '\\App\\Search';
+    private $root = '\\App\\Searches';
 
     /**
      * search

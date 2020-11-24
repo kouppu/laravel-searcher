@@ -3,6 +3,7 @@
 namespace Suhrr\LaravelSearcher;
 
 use Suhrr\LaravelSearcher\LaravelSearcher;
+use Suhrr\LaravelSearcher\Console\MakeCommand;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -23,17 +24,20 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->app->singleton(
-            'laravelSearcher',
+            'searcher',
             function () {
                 return new LaravelSearcher();
             }
         );
+        $this->commands([
+            MakeCommand::class
+        ]);
     }
 
     public function provides()
     {
         return [
-            'laravelSearcher',
+            'searcher',
         ];
     }
 }
