@@ -10,7 +10,7 @@ class FilterDecorator extends AbstractFilterDecorator
     /**
      * @var string
      */
-    protected $filter_namespace = '\\' . __NAMESPACE__ . '\\Filters\\';
+    protected $filter_namespace = 'Suhrr\\LaravelSearcher\\Search\\Filters\\';
 
     /**
      * @var array
