@@ -46,6 +46,6 @@ class MakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Searches';
+        return $rootNamespace . '\\Searches\\' . $this->argument('name');
     }
 }
