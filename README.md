@@ -8,9 +8,6 @@ Requirements
 
 Installation
 ------------
-
-> This package requires PHP 7+ and Laravel 5.5, for old versions please refer to [1.4](https://laravel-admin.org/docs/v1.4/#/)
-
 First, install laravel 6.*:
 
 ```
