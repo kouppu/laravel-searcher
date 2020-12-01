@@ -19,3 +19,7 @@ Then run this command to create search file:
 ```
 php artisan make:search name
 ```
+
+Document 
+------------
+https://suhrr.github.io/laravel-searcher-doc/
