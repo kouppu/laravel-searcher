@@ -11,7 +11,7 @@ Installation
 First, install laravel 6.*:
 
 ```
-composer suhrr/laravel-searcher
+composer require suhrr/laravel-searcher
 ```
 
 Then run this command to create search file:
