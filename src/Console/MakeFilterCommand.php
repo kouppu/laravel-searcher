@@ -62,6 +62,6 @@ class MakeFilterCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\\Searches\\' . $this->argument('model') . '\\Filiters';
+        return $rootNamespace . '\\Searches\\' . $this->argument('model') . '\\Filters';
     }
 }
