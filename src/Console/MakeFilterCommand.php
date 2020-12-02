@@ -3,29 +3,45 @@
 namespace Suhrr\LaravelSearcher\Console;
 
 use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputArgument;
 
-class MakeCommand extends GeneratorCommand
+class MakeFilterCommand extends GeneratorCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'make:search';
+    protected $name = 'make:filter';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Make a new search class';
+    protected $description = 'Make a new filter class';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Search';
+    protected $type = 'Filter';
+
+    /**
+     * InputArgument
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return array_merge(
+            parent::getArguments(),
+            [
+                ['model', InputArgument::REQUIRED, 'set model name']
+            ]
+        );
+    }
 
     /**
      * Get the stub file for the generator.
@@ -34,7 +50,7 @@ class MakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/search.stub';
+        return __DIR__ . '/stubs/filter.stub';
     }
 
     /**
@@ -46,6 +62,6 @@ class MakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Searches';
+        return $rootNamespace . '\\Searches\\' . $this->argument('model') . '\\Filiters';
     }
 }

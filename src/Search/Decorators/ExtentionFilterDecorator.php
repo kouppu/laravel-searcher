@@ -21,6 +21,17 @@ class ExtentionFilterDecorator extends AbstractFilterDecorator
     }
 
     /**
+     * create filter decorator
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function createFilter(string $name): string
+    {
+        return  $this->filter_namespace . $name;
+    }
+
+    /**
      * フィルターをビルダーにセットしていく
      *
      * @param Builder $builder
