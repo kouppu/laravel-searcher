@@ -4,6 +4,7 @@ namespace Suhrr\LaravelSearcher;
 
 use Suhrr\LaravelSearcher\LaravelSearcher;
 use Suhrr\LaravelSearcher\Console\MakeSearchCommand;
+use Suhrr\LaravelSearcher\Console\MakeFilterCommand;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -21,7 +22,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             }
         );
         $this->commands([
-            MakeSearchCommand::class
+            MakeSearchCommand::class,
+            MakeFilterCommand::class
         ]);
     }
 
