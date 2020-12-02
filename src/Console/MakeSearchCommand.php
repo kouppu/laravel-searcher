@@ -4,7 +4,7 @@ namespace Suhrr\LaravelSearcher\Console;
 
 use Illuminate\Console\GeneratorCommand;
 
-class MakeCommand extends GeneratorCommand
+class MakeSearchCommand extends GeneratorCommand
 {
     /**
      * The console command name.
