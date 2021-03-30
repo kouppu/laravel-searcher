@@ -21,7 +21,7 @@ class ExtentionFilterDecorator extends AbstractFilterDecorator
     }
 
     /**
-     * create filter decorator
+     * Create filter decorator
      *
      * @param string $name
      * @return string
@@ -32,7 +32,7 @@ class ExtentionFilterDecorator extends AbstractFilterDecorator
     }
 
     /**
-     * フィルターをビルダーにセットしていく
+     * Setting up the filter in the builder.
      *
      * @param Builder $builder
      * @param array $param

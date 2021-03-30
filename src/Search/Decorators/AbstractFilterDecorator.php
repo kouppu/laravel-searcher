@@ -26,7 +26,7 @@ abstract class AbstractFilterDecorator
     }
 
     /**
-     * create filter decorator
+     * Create filter decorator
      *
      * @param string $name
      * @return string
@@ -37,7 +37,7 @@ abstract class AbstractFilterDecorator
     }
 
     /**
-     * リクエストされた値をDecorator用にバリデーションする
+     * Validate the requested value
      *
      * @param $decorator
      * @param $value
