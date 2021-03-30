@@ -21,7 +21,7 @@ class FilterDecorator extends AbstractFilterDecorator
     ];
 
     /**
-     * フィルターをビルダーにセットしていく
+     * Setting up the filter in the builder
      *
      * @param Builder $builder
      * @param array $param
@@ -50,7 +50,7 @@ class FilterDecorator extends AbstractFilterDecorator
     }
 
     /**
-     * ソート情報をフィルターに必要な形にパースする
+     * Parse the sort
      *
      * @param string $value
      * @return array|null

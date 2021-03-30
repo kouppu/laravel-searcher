@@ -19,7 +19,7 @@ class LaravelSearcher
     }
 
     /**
-     * search
+     * Search
      *
      * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
@@ -31,7 +31,7 @@ class LaravelSearcher
     }
 
     /**
-     * reset
+     * Reset
      *
      * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
@@ -43,7 +43,7 @@ class LaravelSearcher
     }
 
     /**
-     * 継承先の検索クラスのインスタンス文字列を生成
+     * Create an instance string of the search class
      *
      * @param Eloquent $model
      * @return object
