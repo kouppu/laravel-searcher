@@ -53,7 +53,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * set builder
+     * Set builder
      *
      * @param Eloquent $model
      * @return void
@@ -64,7 +64,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * 検索結果を取得
+     * Get search result
      *
      * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
@@ -84,7 +84,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * 検索リセット結果を取得
+     * Get reset result
      *
      * @param Eloquent $model
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection
@@ -101,7 +101,7 @@ abstract class AbstractSearch
     }
 
     /**
-     * BuilderにFiltersディレクリ配下のFilterをセットしていく
+     * Set Filter under Filters directory in Builder.
      *
      * @param Request $request
      * @param Builder $builder
